@@ -106,17 +106,12 @@ if ($mode == DELETION_OF_SELECTED_LANG and !empty($uninstalllang)) {
         die;
 
     } else if (confirm_sesskey()) {
-        $dest1 = $CFG->dataroot.'/lang/'.$uninstalllang;
-        $dest2 = $CFG->dirroot.'/lang/'.$uninstalllang;
-        $rm1 = false;
-        $rm2 = false;
-        if (file_exists($dest1)){
-            $rm1 = remove_dir($dest1);
+        $dest = $CFG->dataroot.'/lang/'.$uninstalllang;
+        $rm = false;
+        if (file_exists($dest)){
+            $rm = remove_dir($dest);
         }
-        if (file_exists($dest2)){
-            $rm2 = remove_dir($dest2);
-        }
-        if ($rm1 or $rm2) {
+        if ($rm) {
             $notice_ok[] = get_string('langpackremoved', 'tool_langimport');
         } else {    //nothing deleted, possibly due to permission error
             $notice_error[] = 'An error has occurred, language pack is not completely uninstalled, please check file permissions';
@@ -145,10 +140,9 @@ if ($mode == UPDATE_ALL_LANG) {
             $notice_ok[] = get_string('langpackupdateskipped', 'tool_langimport', $clang);
             continue;
         }
-        $dest1 = $CFG->dataroot.'/lang/'.$clang;
-        $dest2 = $CFG->dirroot.'/lang/'.$clang;
+        $dest = $CFG->dataroot.'/lang/'.$clang;
 
-        if (file_exists($dest1.'/langconfig.php') || file_exists($dest2.'/langconfig.php')){
+        if (file_exists($dest.'/langconfig.php')) {
             $updateablelangs[] = $clang;
         }
     }
@@ -171,20 +165,10 @@ if ($mode == UPDATE_ALL_LANG) {
         }
 
         // delete old directories
-        $dest1 = $CFG->dataroot.'/lang/'.$pack;
-        $dest2 = $CFG->dirroot.'/lang/'.$pack;
-        $rm1 = false;
-        $rm2 = false;
-        if (file_exists($dest1)) {
-            if (!remove_dir($dest1)) {
-                $notice_error[] = 'Could not delete old directory '.$dest1.', update of '.$pack.' failed, please check permissions.';
-                unset($neededlangs[$packindex]);
-                continue;
-            }
-        }
-        if (file_exists($dest2)) {
-            if (!remove_dir($dest2)) {
-                $notice_error[] = 'Could not delete old directory '.$dest2.', update of '.$pack.' failed, please check permissions.';
+        $dest = $CFG->dataroot.'/lang/'.$pack;
+        if (file_exists($dest)) {
+            if (!remove_dir($dest)) {
+                $notice_error[] = 'Could not delete old directory '.$dest.', update of '.$pack.' failed, please check permissions.';
                 unset($neededlangs[$packindex]);
                 continue;
             }
