@@ -1,4 +1,13 @@
 {
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/sam-moodle/moodle-theme_snap"
+        }
+     ],
+    "require": {
+        "sam-moodle/moodle-theme_snap": "dev-my30stable"
+    },
     "require-dev": {
         "phpunit/phpunit": "4.8.*",
         "phpunit/dbUnit": "1.4.*",
