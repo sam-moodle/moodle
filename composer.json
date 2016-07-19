@@ -1,4 +1,5 @@
 {
+    "name": "sam-moodle/my-moodle-install",
     "repositories": [
         {
             "type": "vcs",
