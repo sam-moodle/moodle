@@ -178,7 +178,7 @@ class behat_theme_boost_behat_navigation extends behat_navigation {
 
         // Find a link and click on it.
         $linkname = behat_context_helper::escape($lastnode);
-        $xpath .= '//a[contains(normalize-space(.), ' . $linkname . ')]';
+        $xpath .= '//a[normalize-space(.)=' . $linkname . ']';
         if (!$node = $this->getSession()->getPage()->find('xpath', $xpath)) {
             throw new ElementNotFoundException($this->getSession(), 'Link "' . join(' > ', $nodelist) . '"" not found on the page');
         }
